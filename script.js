@@ -36,14 +36,17 @@ const setData = (data) => {
   const pokemonCards = data
     .map((pokemon) => {
       return `<div class="card">
-    <img class="pokemon-img" src="${
-      pokemon.sprites.front_default
-    }" alt="${pokemon.name}" />
-    <h2 class="name">${pokemon.name}</h2>
-    <div class="types">
+                <img class="pokemon-img" src="${
+                  pokemon.sprites.front_default
+                }" alt="${pokemon.name}" />
+                <h2 class="name">${pokemon.name}</h2>
+              <div class="types">
     ${pokemon.types
       .map((type) => {
-        return `<div class="type"><img class="type-img" src="/icons/${type.type.name}.png" alt="${type.type.name}" /><p>${type.type.name}</p></div>`;
+        return `<div class="type">
+                  <img class="type-img" src="/icons/${type.type.name}.png" alt="${type.type.name}" />
+                  <p>${type.type.name}</p>
+                </div>`;
       })
       .join("")}
     </div>
