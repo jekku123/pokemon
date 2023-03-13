@@ -33,9 +33,12 @@ const fetchData = async (generations) => {
 };
 
 const setData = (data) => {
-  const pokemonCards = data
-    .map((pokemon) => {
-      return `<div class="card">
+  const pokemonCards =
+    data.length === 0
+      ? `<p class="not-found-msg">No pokemon found ☹️</p>`
+      : data
+          .map((pokemon) => {
+            return `<div class="card">
                 <img class="pokemon-img" src="${
                   pokemon.sprites.front_default
                 }" alt="${pokemon.name}" />
@@ -51,8 +54,10 @@ const setData = (data) => {
       .join("")}
     </div>
   </div>`;
-    })
-    .join("");
+          })
+          .join("");
+
+  console.log(pokemonCards);
 
   cards.innerHTML = pokemonCards;
 };
@@ -90,7 +95,5 @@ document
   .addEventListener("click", searchPokemon);
 
 searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    searchPokemon();
-  }
+  e.key === "Enter" && searchPokemon();
 });
