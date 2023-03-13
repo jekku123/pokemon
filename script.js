@@ -43,7 +43,7 @@ const setData = (data) => {
     <div class="types">
     ${pokemon.types
       .map((type) => {
-        return `<img class="type-img" src="/icons/${type.type.name}.png" alt="${type.type.name}" />`;
+        return `<div class="type"><img class="type-img" src="/icons/${type.type.name}.png" alt="${type.type.name}" /><p>${type.type.name}</p></div>`;
       })
       .join("")}
     </div>
@@ -85,3 +85,9 @@ document
 document
   .querySelector("#search-btn")
   .addEventListener("click", searchPokemon);
+
+searchInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    searchPokemon();
+  }
+});
