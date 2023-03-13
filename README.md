@@ -2,7 +2,7 @@
 
 App where you can list pokemons by generations, filter by their types and search by names.
 
-Made as a Api usage practice for Business College Full-stack developer program.
+Made as a Api usage practice for Business College Full-Stack Developer Program.
 
 ## Technologies used
 
