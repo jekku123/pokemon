@@ -47,7 +47,7 @@ const setData = (data) => {
     ${pokemon.types
       .map((type) => {
         return `<div class="type">
-                  <img class="type-img" src="/icons/${type.type.name}.png" alt="${type.type.name}" />
+                  <img class="type-img" src="icons/${type.type.name}.png" alt="${type.type.name}" />
                   <p>${type.type.name}</p>
                 </div>`;
       })
