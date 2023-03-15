@@ -23,6 +23,10 @@ h2 {
   text-transform: capitalize;
 }
 
+h3 {
+  text-align: center;
+}
+
 p {
   color: white;
   font-size: 1rem;
@@ -36,6 +40,7 @@ p {
 .gen-buttons,
 .type-buttons {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   margin: 20px;
   gap: 10px;
