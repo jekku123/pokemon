@@ -24,37 +24,221 @@
   <body>
     <main>
       <h1>Pokedex</h1>
-      <div class="gen-buttons">
-        <button id="0">Gen 1</button>
-        <button id="1">Gen 2</button>
-        <button id="2">Gen 3</button>
-        <button id="3">Gen 4</button>
-        <button id="4">Gen 5</button>
-        <button id="5">Gen 6</button>
-        <button id="6">Gen 7</button>
-        <button id="7">Gen 8</button>
-        <button id="8">Gen 9</button>
-      </div>
-      <div class="type-buttons">
-        <button id="normal">Normal</button>
-        <button id="fire">Fire</button>
-        <button id="water">Water</button>
-        <button id="grass">grass</button>
-        <button id="electric">Electric</button>
-        <button id="ice">Ice</button>
-        <button id="fighting">Fighting</button>
-        <button id="poison">Poison</button>
-        <button id="ground">Ground</button>
-        <button id="flying">Flying</button>
-        <button id="psychic">Psychic</button>
-        <button id="bug">Bug</button>
-        <button id="rock">Rock</button>
-        <button id="ghost">Ghost</button>
-        <button id="dark">Dark</button>
-        <button id="dragon">Dragon</button>
-        <button id="steel">Steel</button>
-        <button id="fairy">Fairy</button>
-      </div>
+      <form>
+        <div class="gen-buttons">
+          <div class="button">
+            <input
+              type="radio"
+              id="0"
+              name="generation"
+              value="0"
+              checked
+            />
+            <label for="0">ALL</label>
+          </div>
+          <div class="button">
+            <input type="radio" id="1" name="generation" value="1" />
+            <label for="1">Gen 1</label>
+          </div>
+          <div class="button">
+            <input type="radio" id="2" name="generation" value="2" />
+            <label for="2">Gen 2</label>
+          </div>
+          <div class="button">
+            <input type="radio" id="3" name="generation" value="3" />
+            <label for="3">Gen 3</label>
+          </div>
+          <div class="button">
+            <input type="radio" id="4" name="generation" value="4" />
+            <label for="4">Gen 4</label>
+          </div>
+          <div class="button">
+            <input type="radio" id="5" name="generation" value="5" />
+            <label for="5">Gen 5</label>
+          </div>
+          <div class="button">
+            <input type="radio" id="6" name="generation" value="6" />
+            <label for="6">Gen 6</label>
+          </div>
+          <div class="button">
+            <input type="radio" id="7" name="generation" value="7" />
+            <label for="7">Gen 7</label>
+          </div>
+          <div class="button">
+            <input type="radio" id="8" name="generation" value="8" />
+            <label for="8">Gen 8</label>
+          </div>
+          <div class="button">
+            <input type="radio" id="9" name="generation" value="9" />
+            <label for="9">Gen 9</label>
+          </div>
+        </div>
+
+        <div class="type-buttons">
+          <div class="button">
+            <input
+              type="checkbox"
+              id="normal"
+              name="types"
+              value="normal"
+            />
+            <label for="normal">Normal</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="fire"
+              name="types"
+              value="fire"
+            />
+            <label for="fire">Fire</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="water"
+              name="types"
+              value="water"
+            />
+            <label for="water">Water</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="grass"
+              name="types"
+              value="grass"
+            />
+            <label for="grass">Grass</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="electric"
+              name="types"
+              value="electric"
+            />
+            <label for="electric">Electric</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="ice"
+              name="types"
+              value="ice"
+            />
+            <label for="ice">Ice</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="fighting"
+              name="types"
+              value="fighting"
+            />
+            <label for="fighting">Fighting</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="poison"
+              name="types"
+              value="poison"
+            />
+            <label for="poison">Poison</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="ground"
+              name="types"
+              value="ground"
+            />
+            <label for="ground">Ground</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="flying"
+              name="types"
+              value="flying"
+            />
+            <label for="flying">Flying</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="psychic"
+              name="types"
+              value="psychic"
+            />
+            <label for="psychic">Psychic</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="bug"
+              name="types"
+              value="bug"
+            />
+            <label for="bug">Bug</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="rock"
+              name="types"
+              value="rock"
+            />
+            <label for="rock">Rock</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="ghost"
+              name="types"
+              value="ghost"
+            />
+            <label for="ghost">Ghost</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="dark"
+              name="types"
+              value="dark"
+            />
+            <label for="dark">Dark</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="dragon"
+              name="types"
+              value="dragon"
+            />
+            <label for="dragon">Dragon</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="steel"
+              name="types"
+              value="steel"
+            />
+            <label for="steel">Steel</label>
+          </div>
+          <div class="button">
+            <input
+              type="checkbox"
+              id="fairy"
+              name="types"
+              value="fairy"
+            />
+            <label for="fairy">Fairy</label>
+          </div>
+        </div>
+      </form>
       <div class="search">
         <input
           type="text"

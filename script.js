@@ -1,23 +1,28 @@
 const cards = document.querySelector(".cards");
 const searchInput = document.querySelector("#search-input");
 
-const generations = [
-  { limit: 151, offset: 0 },
-  { limit: 100, offset: 151 },
-  { limit: 135, offset: 251 },
-  { limit: 107, offset: 386 },
-  { limit: 156, offset: 493 },
-  { limit: 72, offset: 649 },
-  { limit: 88, offset: 721 },
-  { limit: 96, offset: 809 },
-  { limit: 3, offset: 905 },
-];
+let pokemons = [];
 
-let results = [];
+let choises = {
+  generation: "",
+  types: [],
+};
 
-const fetchData = async (generations) => {
+const getGeneration = (idx) => {
+  if (idx >= 0 && idx < 151) return 1;
+  if (idx >= 151 && idx < 251) return 2;
+  if (idx >= 251 && idx < 386) return 3;
+  if (idx >= 386 && idx < 493) return 4;
+  if (idx >= 493 && idx < 649) return 5;
+  if (idx >= 649 && idx < 721) return 6;
+  if (idx >= 721 && idx < 809) return 7;
+  if (idx >= 809 && idx < 905) return 8;
+  if (idx >= 905 && idx < 908) return 9;
+};
+
+const fetchData = async () => {
   const res = await fetch(
-    `https://pokeapi.co/api/v2/pokemon?limit=${generations.limit}&offset=${generations.offset}`
+    `https://pokeapi.co/api/v2/pokemon?limit=908&offset=0`
   );
   const data = await res.json();
 
@@ -27,29 +32,50 @@ const fetchData = async (generations) => {
     return data;
   });
 
-  results = await Promise.all(mappedFetches);
+  const mappedData = await Promise.all(mappedFetches);
 
-  setData(results);
+  pokemons = mappedData.map((pokeman, i) => {
+    return {
+      id: pokeman.id,
+      generation: getGeneration(i),
+      name: pokeman.name,
+      image: pokeman.sprites.front_default,
+      types: pokeman.types.map((type) => {
+        return {
+          name: type.type.name,
+          img: `icons/${type.type.name}.png`,
+        };
+      }),
+    };
+  });
+
+  setData(pokemons);
 };
+
+fetchData();
 
 const setData = (data) => {
   const pokemonCards =
     data.length === 0
-      ? `<p class="not-found-msg">No pokemon found ☹️</p>`
+      ? `
+      <p class="not-found-msg">No pokemon found ☹️</p>`
       : data
           .map((pokemon) => {
-            return `<div class="card">
-                <img class="pokemon-img" src="${
-                  pokemon.sprites.front_default
-                }" alt="${pokemon.name}" />
-                <h2 class="name">${pokemon.name}</h2>
-              <div class="types">
+            return `
+        <div class="card">
+          <p class="generation">${pokemon.generation}</p>
+          <img class="pokemon-img" src="${pokemon.image}" alt="${
+              pokemon.name
+            }" />
+          <h2 class="name">${pokemon.name}</h2>
+        <div class="types">
     ${pokemon.types
       .map((type) => {
-        return `<div class="type">
-                  <img class="type-img" src="icons/${type.type.name}.png" alt="${type.type.name}" />
-                  <p>${type.type.name}</p>
-                </div>`;
+        return `
+        <div class="type">
+          <img class="type-img" src="${type.img}" alt="${type.name}" />
+          <p>${type.name}</p>
+        </div>`;
       })
       .join("")}
     </div>
@@ -57,43 +83,78 @@ const setData = (data) => {
           })
           .join("");
 
-  console.log(pokemonCards);
-
   cards.innerHTML = pokemonCards;
-};
-
-const filterResults = (e) => {
-  const foundPokes = results.filter((el) => {
-    return el.types.some((type) => type.type.name === e.target.id);
-  });
-  setData(foundPokes);
 };
 
 const searchPokemon = () => {
   const search = searchInput.value;
-  const foundPoke = results.filter((el) => {
+  const foundPokemon = pokemons.filter((el) => {
     return el.name === search.toLowerCase();
   });
-  setData(foundPoke);
+  setData(foundPokemon);
 };
 
-const setGeneration = (e) => {
-  const generation = +e.target.id;
-  fetchData(generations[generation]);
+const updatePokemons = () => {
+  let foundPokemons = [];
+
+  if (+choises.generation === 0 && choises.types.length === 0) {
+    foundPokemons = pokemons;
+  } else if (
+    +choises.generation === 0 &&
+    choises.types.length !== 0
+  ) {
+    foundPokemons = pokemons.filter((pokemon) => {
+      return pokemon.types.some((type) =>
+        choises.types.includes(type.name)
+      );
+    });
+  } else if (
+    +choises.generation !== 0 &&
+    choises.types.length === 0
+  ) {
+    foundPokemons = pokemons.filter((pokemon) => {
+      return pokemon.generation === +choises.generation;
+    });
+  } else if (
+    +choises.generation !== 0 &&
+    choises.types.length !== 0
+  ) {
+    foundPokemons = pokemons.filter((pokemon) => {
+      return pokemon.types.some(
+        (type) =>
+          choises.types.includes(type.name) &&
+          pokemon.generation === +choises.generation
+      );
+    });
+  }
+  setData(foundPokemons);
 };
 
-document
-  .querySelectorAll(".gen-buttons")
-  .forEach((el) => el.addEventListener("click", setGeneration));
-
-document
-  .querySelectorAll(".type-buttons")
-  .forEach((el) => el.addEventListener("click", filterResults));
+const handleChoises = (e) => {
+  const { name, value, type, checked } = e.target;
+  if (type === "checkbox") {
+    checked
+      ? choises[name].push(value)
+      : (choises[name] = choises[name].filter(
+          (item) => item !== value
+        ));
+  } else {
+    choises[name] = value;
+  }
+  updatePokemons();
+};
 
 document
   .querySelector("#search-btn")
   .addEventListener("click", searchPokemon);
 
+document
+  .querySelector("form")
+  .addEventListener("change", handleChoises);
+
 searchInput.addEventListener("keydown", (e) => {
-  e.key === "Enter" && searchPokemon();
+  if (e.key === "Enter") {
+    searchPokemon();
+    searchInput.value = "";
+  }
 });
