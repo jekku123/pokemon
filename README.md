@@ -1,4 +1,4 @@
-# Pokemon App
+# Pokedex App
 
 App where you can list pokemons by generations, filter by their types and search by names.
 
@@ -11,6 +11,10 @@ Built with:
 - HTML
 - CSS
 - JavaScript
+
+## Live site
+
+- [Pokedex](https://public.bc.fi/s2300208/pokemon/)
 
 ## Sources
 
