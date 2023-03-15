@@ -35,13 +35,14 @@ const fetchData = async () => {
 
   const mappedData = await Promise.all(mappedFetches);
 
-  pokemons = mappedData.map((pokeman, i) => {
+  pokemons = mappedData.map((pokemon, i) => {
+    console.log(pokemon);
     return {
-      id: pokeman.id,
+      id: pokemon.id,
       generation: getGeneration(i),
-      name: pokeman.name,
-      image: pokeman.sprites.front_default,
-      types: pokeman.types.map((type) => {
+      name: pokemon.name,
+      image: pokemon.sprites.front_default,
+      types: pokemon.types.map((type) => {
         return {
           name: type.type.name,
           img: `icons/${type.type.name}.png`,
