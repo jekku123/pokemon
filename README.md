@@ -1,10 +1,10 @@
 # Pokedex App
 
-Practice project for Business College Full-Stack Program
-
 App where you can list pokemons by generations, filter by their types and search by names.
 
 App is under construction!!
+
+Practice project for Business College Full-Stack Program
 
 ## Technologies used
 
