@@ -127,6 +127,10 @@ button:hover {
   position: relative;
 }
 
+.button:hover {
+  background-color: rgb(251, 207, 149);
+}
+
 .button label,
 .button input {
   display: block;
