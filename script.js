@@ -2,6 +2,7 @@ const cards = document.querySelector(".cards");
 const searchInput = document.querySelector("#search-input");
 
 let pokemons = [];
+let activePokemons = [];
 
 let choises = {
   generation: "",
@@ -49,7 +50,7 @@ const fetchData = async () => {
     };
   });
 
-  setData(pokemons);
+  updatePokemons();
 };
 
 fetchData();
@@ -88,7 +89,7 @@ const setData = (data) => {
 
 const searchPokemon = () => {
   const search = searchInput.value;
-  const foundPokemon = pokemons.filter((el) => {
+  const foundPokemon = activePokemons.filter((el) => {
     return el.name === search.toLowerCase();
   });
   setData(foundPokemon);
@@ -127,6 +128,8 @@ const updatePokemons = () => {
       );
     });
   }
+
+  activePokemons = foundPokemons;
   setData(foundPokemons);
 };
 
