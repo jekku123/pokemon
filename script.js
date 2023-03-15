@@ -36,7 +36,6 @@ const fetchData = async () => {
   const mappedData = await Promise.all(mappedFetches);
 
   pokemons = mappedData.map((pokemon, i) => {
-    console.log(pokemon);
     return {
       id: pokemon.id,
       generation: getGeneration(i),
