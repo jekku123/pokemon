@@ -102,10 +102,19 @@ const updatePokemons = () => {
     foundPokemons = pokemons;
   } else if (
     +choises.generation === 0 &&
-    choises.types.length !== 0
+    choises.types.length === 1
   ) {
     foundPokemons = pokemons.filter((pokemon) => {
       return pokemon.types.some((type) =>
+        choises.types.includes(type.name)
+      );
+    });
+  } else if (
+    +choises.generation === 0 &&
+    choises.types.length === 2
+  ) {
+    foundPokemons = pokemons.filter((pokemon) => {
+      return pokemon.types.every((type) =>
         choises.types.includes(type.name)
       );
     });
@@ -118,10 +127,21 @@ const updatePokemons = () => {
     });
   } else if (
     +choises.generation !== 0 &&
-    choises.types.length !== 0
+    choises.types.length === 1
   ) {
     foundPokemons = pokemons.filter((pokemon) => {
       return pokemon.types.some(
+        (type) =>
+          choises.types.includes(type.name) &&
+          pokemon.generation === +choises.generation
+      );
+    });
+  } else if (
+    +choises.generation !== 0 &&
+    choises.types.length === 2
+  ) {
+    foundPokemons = pokemons.filter((pokemon) => {
+      return pokemon.types.every(
         (type) =>
           choises.types.includes(type.name) &&
           pokemon.generation === +choises.generation
