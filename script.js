@@ -87,10 +87,10 @@ const setData = (data) => {
   cards.innerHTML = pokemonCards;
 };
 
-const searchPokemon = () => {
-  const search = searchInput.value;
+const searchPokemon = (e) => {
+  const search = e.target.value;
   const foundPokemon = activePokemons.filter((el) => {
-    return el.name === search.toLowerCase();
+    return el.name.includes(search);
   });
   setData(foundPokemon);
 };
@@ -168,16 +168,7 @@ const handleChoises = (e) => {
 };
 
 document
-  .querySelector("#search-btn")
-  .addEventListener("click", searchPokemon);
-
-document
   .querySelector("form")
   .addEventListener("change", handleChoises);
 
-searchInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    searchPokemon();
-    searchInput.value = "";
-  }
-});
+searchInput.addEventListener("input", searchPokemon);
