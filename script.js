@@ -98,32 +98,19 @@ const updatePokemons = () => {
   const generation = +choises.generation;
   const types = choises.types;
 
-  // if (!generation) {
-  //   if (!types.length) pokes = pokemons;
-
-  //   if (types.length === 1) {
-  //     pokes = pokemons.filter((poke) => {
-  //       return poke.types.some((type) => types.includes(type.name));
-  //     });
-  //   }
-  //   if (types.length > 1) {
-  //     pokes = pokemons.filter((poke) => {
-  //       return poke.types.every((type) => types.includes(type.name));
-  //     });
-  //   }
-  // }
-
   if (!generation) {
-    pokes = !types.length
-      ? pokemons
-      : types.length === 1
-      ? pokemons.filter((poke) => {
-          return poke.types.some((type) => types.includes(type.name));
-        })
-      : types.length > 1 &&
-        pokemons.filter((poke) => {
-          return poke.types.every((type) => types.includes(type.name));
-        });
+    if (!types.length) pokes = pokemons;
+
+    if (types.length === 1) {
+      pokes = pokemons.filter((poke) => {
+        return poke.types.some((type) => types.includes(type.name));
+      });
+    }
+    if (types.length > 1) {
+      pokes = pokemons.filter((poke) => {
+        return poke.types.every((type) => types.includes(type.name));
+      });
+    }
   }
 
   if (generation) {
