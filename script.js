@@ -33,14 +33,18 @@ const getGeneration = (idx) => {
     return data;
   });
 
-  const mappedData = await Promise.all(mappedFetches);
+  setPokemons(await Promise.all(mappedFetches));
+  setActivePokemons();
+})();
 
-  pokemons = mappedData.map((pokemon, i) => {
+const setPokemons = (data) => {
+  console.log(data);
+  pokemons = data.map((pokemon, i) => {
     return {
       id: pokemon.id,
       generation: getGeneration(i),
       name: pokemon.name,
-      image: pokemon.sprites.front_default,
+      image: pokemon.sprites.other['official-artwork'].front_default,
       types: pokemon.types.map((type) => {
         return {
           name: type.type.name,
@@ -49,40 +53,6 @@ const getGeneration = (idx) => {
       }),
     };
   });
-
-  updatePokemons();
-})();
-
-const setData = (data) => {
-  const pokemonCards =
-    data.length === 0
-      ? `
-      <p class="not-found-msg">No pokemon found ☹️</p>`
-      : data
-          .map((pokemon) => {
-            return `
-        <div class="card">
-          <p class="generation">${pokemon.generation}</p>
-          <img class="pokemon-img" src="${pokemon.image}" alt="${
-              pokemon.name
-            }" />
-          <h2 class="name">${pokemon.name}</h2>
-        <div class="types">
-    ${pokemon.types
-      .map((type) => {
-        return `
-        <div class="type">
-          <img class="type-img" src="${type.img}" alt="${type.name}" />
-          <p>${type.name}</p>
-        </div>`;
-      })
-      .join('')}
-    </div>
-  </div>`;
-          })
-          .join('');
-
-  cards.innerHTML = pokemonCards;
 };
 
 const searchPokemon = (e) => {
@@ -90,10 +60,10 @@ const searchPokemon = (e) => {
   const foundPokemon = activePokemons.filter((el) => {
     return el.name.includes(search);
   });
-  setData(foundPokemon);
+  setShownPokemons(foundPokemon);
 };
 
-const updatePokemons = () => {
+const setActivePokemons = () => {
   let pokes = [];
   const generation = +choises.generation;
   const types = choises.types;
@@ -136,7 +106,39 @@ const updatePokemons = () => {
   }
 
   activePokemons = pokes;
-  setData(pokes);
+  setShownPokemons(pokes);
+};
+
+const setShownPokemons = (data) => {
+  const pokemonCards =
+    data.length === 0
+      ? `
+      <p class="not-found-msg">No pokemon found ☹️</p>`
+      : data
+          .map((pokemon) => {
+            return `
+        <div class="card">
+          <p class="generation">${pokemon.generation}</p>
+          <img class="pokemon-img" src="${pokemon.image}" alt="${
+              pokemon.name
+            }" />
+          <h2 class="name">${pokemon.name}</h2>
+        <div class="types">
+    ${pokemon.types
+      .map((type) => {
+        return `
+        <div class="type">
+          <img class="type-img" src="${type.img}" alt="${type.name}" />
+          <p>${type.name}</p>
+        </div>`;
+      })
+      .join('')}
+    </div>
+  </div>`;
+          })
+          .join('');
+
+  cards.innerHTML = pokemonCards;
 };
 
 const handleChoises = (e) => {
@@ -148,7 +150,7 @@ const handleChoises = (e) => {
   } else {
     choises[name] = value;
   }
-  updatePokemons();
+  setActivePokemons();
 };
 
 document.querySelector('form').addEventListener('change', handleChoises);
