@@ -95,35 +95,57 @@ const searchPokemon = (e) => {
 
 const updatePokemons = () => {
   let pokes = [];
-  const gen = +choises.generation;
+  const generation = +choises.generation;
   const types = choises.types;
 
-  if (!gen && !types.length) {
-    pokes = pokemons;
-  } else if (!gen && types.length === 1) {
-    pokes = pokemons.filter((poke) => {
-      return poke.types.some((type) => types.includes(type.name));
-    });
-  } else if (!gen && types.length === 2) {
-    pokes = pokemons.filter((poke) => {
-      return poke.types.every((type) => types.includes(type.name));
-    });
-  } else if (gen && !types.length) {
-    pokes = pokemons.filter((poke) => {
-      return poke.generation === gen;
-    });
-  } else if (gen && types.length === 1) {
-    pokes = pokemons.filter((poke) => {
-      return poke.types.some(
-        (type) => types.includes(type.name) && poke.generation === gen
-      );
-    });
-  } else if (gen && types.length === 2) {
-    pokes = pokemons.filter((poke) => {
-      return poke.types.every(
-        (type) => types.includes(type.name) && poke.generation === gen
-      );
-    });
+  // if (!generation) {
+  //   if (!types.length) pokes = pokemons;
+
+  //   if (types.length === 1) {
+  //     pokes = pokemons.filter((poke) => {
+  //       return poke.types.some((type) => types.includes(type.name));
+  //     });
+  //   }
+  //   if (types.length > 1) {
+  //     pokes = pokemons.filter((poke) => {
+  //       return poke.types.every((type) => types.includes(type.name));
+  //     });
+  //   }
+  // }
+
+  if (!generation) {
+    pokes = !types.length
+      ? pokemons
+      : types.length === 1
+      ? pokemons.filter((poke) => {
+          return poke.types.some((type) => types.includes(type.name));
+        })
+      : types.length > 1 &&
+        pokemons.filter((poke) => {
+          return poke.types.every((type) => types.includes(type.name));
+        });
+  }
+
+  if (generation) {
+    if (!types.length) {
+      pokes = pokemons.filter((poke) => {
+        return poke.generation === generation;
+      });
+    }
+    if (types.length === 1) {
+      pokes = pokemons.filter((poke) => {
+        return poke.types.some(
+          (type) => types.includes(type.name) && poke.generation === generation
+        );
+      });
+    }
+    if (types.length > 1) {
+      pokes = pokemons.filter((poke) => {
+        return poke.types.every(
+          (type) => types.includes(type.name) && poke.generation === generation
+        );
+      });
+    }
   }
 
   activePokemons = pokes;
