@@ -1,11 +1,11 @@
-const cards = document.querySelector(".cards");
-const searchInput = document.querySelector("#search-input");
+const cards = document.querySelector('.cards');
+const searchInput = document.querySelector('#search-input');
 
 let pokemons = [];
 let activePokemons = [];
 
 let choises = {
-  generation: "",
+  generation: '',
   types: [],
 };
 
@@ -21,7 +21,7 @@ const getGeneration = (idx) => {
   if (idx >= 905 && idx < 908) return 9;
 };
 
-const fetchData = async () => {
+(async () => {
   const res = await fetch(
     `https://pokeapi.co/api/v2/pokemon?limit=908&offset=0`
   );
@@ -51,9 +51,7 @@ const fetchData = async () => {
   });
 
   updatePokemons();
-};
-
-fetchData();
+})();
 
 const setData = (data) => {
   const pokemonCards =
@@ -78,11 +76,11 @@ const setData = (data) => {
           <p>${type.name}</p>
         </div>`;
       })
-      .join("")}
+      .join('')}
     </div>
   </div>`;
           })
-          .join("");
+          .join('');
 
   cards.innerHTML = pokemonCards;
 };
@@ -96,79 +94,54 @@ const searchPokemon = (e) => {
 };
 
 const updatePokemons = () => {
-  let foundPokemons = [];
+  let pokes = [];
+  const gen = +choises.generation;
+  const types = choises.types;
 
-  if (+choises.generation === 0 && choises.types.length === 0) {
-    foundPokemons = pokemons;
-  } else if (
-    +choises.generation === 0 &&
-    choises.types.length === 1
-  ) {
-    foundPokemons = pokemons.filter((pokemon) => {
-      return pokemon.types.some((type) =>
-        choises.types.includes(type.name)
+  if (!gen && !types.length) {
+    pokes = pokemons;
+  } else if (!gen && types.length === 1) {
+    pokes = pokemons.filter((poke) => {
+      return poke.types.some((type) => types.includes(type.name));
+    });
+  } else if (!gen && types.length === 2) {
+    pokes = pokemons.filter((poke) => {
+      return poke.types.every((type) => types.includes(type.name));
+    });
+  } else if (gen && !types.length) {
+    pokes = pokemons.filter((poke) => {
+      return poke.generation === gen;
+    });
+  } else if (gen && types.length === 1) {
+    pokes = pokemons.filter((poke) => {
+      return poke.types.some(
+        (type) => types.includes(type.name) && poke.generation === gen
       );
     });
-  } else if (
-    +choises.generation === 0 &&
-    choises.types.length === 2
-  ) {
-    foundPokemons = pokemons.filter((pokemon) => {
-      return pokemon.types.every((type) =>
-        choises.types.includes(type.name)
-      );
-    });
-  } else if (
-    +choises.generation !== 0 &&
-    choises.types.length === 0
-  ) {
-    foundPokemons = pokemons.filter((pokemon) => {
-      return pokemon.generation === +choises.generation;
-    });
-  } else if (
-    +choises.generation !== 0 &&
-    choises.types.length === 1
-  ) {
-    foundPokemons = pokemons.filter((pokemon) => {
-      return pokemon.types.some(
-        (type) =>
-          choises.types.includes(type.name) &&
-          pokemon.generation === +choises.generation
-      );
-    });
-  } else if (
-    +choises.generation !== 0 &&
-    choises.types.length === 2
-  ) {
-    foundPokemons = pokemons.filter((pokemon) => {
-      return pokemon.types.every(
-        (type) =>
-          choises.types.includes(type.name) &&
-          pokemon.generation === +choises.generation
+  } else if (gen && types.length === 2) {
+    pokes = pokemons.filter((poke) => {
+      return poke.types.every(
+        (type) => types.includes(type.name) && poke.generation === gen
       );
     });
   }
 
-  activePokemons = foundPokemons;
-  setData(foundPokemons);
+  activePokemons = pokes;
+  setData(pokes);
 };
 
 const handleChoises = (e) => {
   const { name, value, type, checked } = e.target;
-  if (type === "checkbox") {
+  if (type === 'checkbox') {
     checked
       ? choises[name].push(value)
-      : (choises[name] = choises[name].filter(
-          (item) => item !== value
-        ));
+      : (choises[name] = choises[name].filter((item) => item !== value));
   } else {
     choises[name] = value;
   }
   updatePokemons();
 };
 
-document
-  .querySelector("form")
-  .addEventListener("change", handleChoises);
+document.querySelector('form').addEventListener('change', handleChoises);
 
-searchInput.addEventListener("input", searchPokemon);
+searchInput.addEventListener('input', searchPokemon);
