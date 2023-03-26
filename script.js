@@ -38,7 +38,6 @@ const getGeneration = (idx) => {
 })();
 
 const setPokemons = (data) => {
-  console.log(data);
   pokemons = data.map((pokemon, i) => {
     return {
       id: pokemon.id,
