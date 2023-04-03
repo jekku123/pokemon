@@ -18,7 +18,7 @@ const getGeneration = (idx) => {
   if (idx >= 649 && idx < 721) return 6;
   if (idx >= 721 && idx < 809) return 7;
   if (idx >= 809 && idx < 905) return 8;
-  if (idx >= 905 && idx < 908) return 9;
+  if (idx >= 905 && idx < 1015) return 9;
 };
 
 (async () => {
